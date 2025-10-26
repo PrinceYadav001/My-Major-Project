@@ -69,9 +69,9 @@ const sessionOptions = {
     },
 }
 
-// app.get("/",(req,res)=>{
-//     res.send("don't Click again this not game")
-// })
+app.get("/",(req,res)=>{
+    res.redirect("/listings");
+})
 
 
 
