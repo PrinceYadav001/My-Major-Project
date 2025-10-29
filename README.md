@@ -184,9 +184,6 @@ MAP_TOKEN=your_mapbox_access_token
 **Prince Yadav**
 - GitHub: [@PrinceYadav001](https://github.com/PrinceYadav001)
 
-## 📄 License
-
-This project is licensed under the ISC License - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
