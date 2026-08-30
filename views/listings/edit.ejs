@@ -1,61 +1,95 @@
 <% layout('/layouts/boilerplate') %>
-    <div class="row mt-3">
-        <div class="col-8 offset-2">
-            <h3>Edit Your Listing</h3>
-            <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="needs-validation" novalidate
-                enctype="multipart/form-data">
 
-                <div class="mb-3">
-                    <label for="title" class="form-label">Title</label>
-                    <input id="title" value="<%= listing.title %>" type="text" name="listing[title]"
-                        class="form-control" required />
-                    <div class="invalid-feedback">Please enter the title.</div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="description" class="form-label">Description</label>
-                    <textarea id="description" name="listing[description]" class="form-control"
-                        required><%= listing.description %></textarea>
-                    <div class="invalid-feedback">Please enter the short description</div>
-                </div>
-
-
-
-                <div class="mb-3">
-                    <h5>Original Listing Image</h5>
-                    <img class="edit-img" src="<%= originalImageUrl %>" alt="Listing Image">
-                </div>
-
-
-                <div class="mb-3">
-                    <label for="image" class="form-label">Upload New Image</label>
-                    <input id="image" type="file" name="image" class="form-control" />
-                </div>
-
-
-                <div class="row">
-                    <div class="mb-3 col-md-4">
-                        <label for="price" class="form-label">Price</label>
-                        <input id="price" value="<%= listing.price %>" type="number" name="listing[price]"
-                            class="form-control" required />
-                        <div class="invalid-feedback">Please enter a vaild price.</div>
-                    </div>
-                    <div class="mb-3 col-md-8">
-                        <label for="country" class="form-label">Country</label>
-                        <input id="country" value="<%= listing.country %>" type="text" name="listing[country]"
-                            class="form-control" required />
-                        <div class="invalid-feedback">Please enter the country name.</div>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label for="location" class="form-label">Location</label>
-                    <input id="location" value="<%= listing.location %>" type="text" name="listing[location]"
-                        class="form-control" required />
-                    <div class="invalid-feedback">Please enter the location.</div>
-                </div>
-
-                <button class="btn btn-dark add-btn mt-3">Update Listing</button>
-            </form>
-        </div>
+<div class="form-page-wrapper">
+  <div class="form-card">
+    <div class="form-card-header">
+      <i class="fa-solid fa-pen-to-square brand-icon-lg"></i>
+      <h2>Edit Your Listing</h2>
+      <p>Update the details for "<%= listing.title %>"</p>
     </div>
+
+    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT"
+      class="needs-validation" novalidate enctype="multipart/form-data">
+
+      <div class="mb-3">
+        <label for="title" class="form-label">Title</label>
+        <input
+          id="title"
+          value="<%= listing.title %>"
+          type="text"
+          name="listing[title]"
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Please enter the title.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          id="description"
+          name="listing[description]"
+          class="form-control"
+          rows="4"
+          required
+        ><%= listing.description %></textarea>
+        <div class="invalid-feedback">Please enter a description.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Current Image</label>
+        <img class="edit-img d-block mb-2" src="<%= originalImageUrl %>" alt="Current listing image">
+        <label for="image" class="form-label">
+          <i class="fa-solid fa-arrow-up-from-bracket me-1"></i> Upload New Image
+          <span class="text-muted" style="font-weight:400;"> (optional)</span>
+        </label>
+        <input id="image" type="file" name="image" class="form-control" accept="image/*">
+      </div>
+
+      <div class="row">
+        <div class="mb-3 col-md-4">
+          <label for="price" class="form-label">Price (₹ / night)</label>
+          <input
+            id="price"
+            value="<%= listing.price %>"
+            type="number"
+            name="listing[price]"
+            class="form-control"
+            min="0"
+            required
+          />
+          <div class="invalid-feedback">Please enter a valid price.</div>
+        </div>
+        <div class="mb-3 col-md-8">
+          <label for="country" class="form-label">Country</label>
+          <input
+            id="country"
+            value="<%= listing.country %>"
+            type="text"
+            name="listing[country]"
+            class="form-control"
+            required
+          />
+          <div class="invalid-feedback">Please enter the country name.</div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="location" class="form-label">Location</label>
+        <input
+          id="location"
+          value="<%= listing.location %>"
+          type="text"
+          name="listing[location]"
+          class="form-control"
+          required
+        />
+        <div class="invalid-feedback">Please enter the location.</div>
+      </div>
+
+      <button class="btn add-btn" id="update-listing-btn" type="submit">
+        <i class="fa-solid fa-floppy-disk me-1"></i> Save Changes
+      </button>
+    </form>
+  </div>
+</div>

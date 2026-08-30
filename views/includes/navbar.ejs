@@ -1,54 +1,74 @@
-<style>
-  .search-btn{
-    background-color:#fe424d;
-    color: white;
-    border-radius: 25px;
-    padding: 0 1rem 0 1rem;
-  }
-  .search-btn:hover{
-    background-color:#fe424d;
-    color: white;
-  }
-  .search-btn i{
-    display: inline;
-    margin-right: 0.5rem;
-  }
-  .search-inp{
-    border-radius:25px ;
-    padding:0.5rem 3rem 0.5rem 3rem ;
-    
-  }
-</style>
-<nav class="navbar navbar-expand-md bg-body-light border-bottom  sticky-top">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-md sticky-top">
+  <div class="container-fluid px-4">
+
+    <!-- Brand -->
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-regular fa-compass brand-icon"></i>
+      <span class="brand-text">Wanderlust</span>
+    </a>
+
+    <!-- Mobile toggler -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+      data-bs-target="#navbarMain" aria-controls="navbarMain"
+      aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
+
+    <div class="collapse navbar-collapse" id="navbarMain">
+
+    <!-- Search — only on listings index & search results pages -->
+    <% const onListingsIndex = currPath === '/listings' || currPath.startsWith('/listings?'); %>
+    <% if (onListingsIndex) { %>
+    <div class="mx-auto my-2 my-md-0">
+      <form class="search-form" role="search" action="/listings" method="GET">
+        <i class="fa-solid fa-magnifying-glass text-muted me-2" style="font-size:0.85rem;"></i>
+        <input
+          class="search-inp"
+          type="search"
+          name="q"
+          value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+          placeholder="Search destinations…"
+          aria-label="Search destinations"
+        />
+        <button class="search-btn" type="submit" id="search-submit-btn">
+          Search
+        </button>
+      </form>
+    </div>
+    <% } %>
+
+      <!-- Right-side nav -->
+      <div class="navbar-nav ms-auto align-items-center gap-1 my-2 my-md-0">
         <a class="nav-link" href="/listings">Explore</a>
-      </div>
-
-      <div class="navbar-nav ms-auto">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2 search-inp" type="search" placeholder="Search destinations"  />
-          <button class="btn search-btn" type="submit"> <i class="fa-solid fa-magnifying-glass"></i>Search</button>
-        </form>
-      </div>
-
-
-      <div class="navbar-nav ms-auto">
         <a class="nav-link" href="/listings/new">Airbnb your home</a>
-        <%if(!currUser){%>
-          <a class="nav-link " aria-current="/signup" href="/signup"><b>Sign Up</b></a>
-          <a class="nav-link" href="/login"><b>Log in</b></a>
-          <%}%>
-            <%if(currUser){%>
-              <a class="nav-link" href="/logout"><b>Log out</b></a>
-              <%}%>
+
+        <% if (!currUser) { %>
+          <a class="btn-airbnb-link ms-2" href="/signup" id="signup-nav-btn">
+            <i class="fa-regular fa-user"></i> Sign Up
+          </a>
+          <a class="btn-airbnb-link" href="/login" id="login-nav-btn">
+            Log In
+          </a>
+        <% } else { %>
+          <span class="nav-link text-muted" style="font-size:0.85rem;">
+            <i class="fa-solid fa-circle-user me-1" style="color:var(--brand)"></i>
+            <%= currUser.username %>
+          </span>
+          <a class="btn-airbnb-link" href="/logout" id="logout-nav-btn">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
+          </a>
+        <% } %>
       </div>
+
     </div>
   </div>
 </nav>
+
+<script>
+  // Add scrolled class for shadow effect
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('.navbar');
+    if (window.scrollY > 10) nav.classList.add('navbar-scrolled');
+    else nav.classList.remove('navbar-scrolled');
+  });
+</script>

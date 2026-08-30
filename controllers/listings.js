@@ -3,10 +3,24 @@ const mbxGeoCoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
 const geocodingClient = mbxGeoCoding({ accessToken: mapToken });
 
-// index controller
+// index controller — supports ?q= search query
 module.exports.index = async (req, res) => {
-    const All = await Listing.find({});
-    res.render("listings/index.ejs", { All });
+    const searchQuery = req.query.q ? req.query.q.trim() : "";
+    let query = {};
+
+    if (searchQuery) {
+        const regex = new RegExp(searchQuery, "i"); // case-insensitive
+        query = {
+            $or: [
+                { title:    regex },
+                { location: regex },
+                { country:  regex },
+            ],
+        };
+    }
+
+    const All = await Listing.find(query);
+    res.render("listings/index.ejs", { All, searchQuery });
 }
 
 

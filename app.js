@@ -18,8 +18,6 @@ const User = require("./models/user.js")
 const listingsRouter = require("./routes/listing.js")
 const reviewsRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
-const user = require("./models/user.js");
-
 
 
 
@@ -63,7 +61,7 @@ const sessionOptions = {
     resave: false,
     saveUninitialized:true,
     cookie:{
-        express:Date.now() + 1000*60*60*24*3,
+        expires: Date.now() + 1000*60*60*24*3,
         maxAge:1000*60*60*24*3,
         httpOnly:true,
     },
@@ -92,6 +90,7 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
+    res.locals.currPath = req.originalUrl; // used by navbar to show/hide search
     next();
 });
 
