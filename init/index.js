@@ -4,7 +4,7 @@ const initData = require("./data.js");
 const Listing = require("../models/listing.js");
 require("dotenv").config(); // load .env so MAP_TOKEN is available
 
-const MONGO_URL = "mongodb://useprinceid_db_user:prince123@ac-dcba7dz-shard-00-00.0zqddw0.mongodb.net:27017,ac-dcba7dz-shard-00-01.0zqddw0.mongodb.net:27017,ac-dcba7dz-shard-00-02.0zqddw0.mongodb.net:27017/?ssl=true&replicaSet=atlas-c09q5w-shard-0&authSource=admin&appName=Cluster0";
+const MONGO_URL = process.env.ATLASDB_URL;
 
 const MAP_TOKEN = process.env.MAP_TOKEN; // read from .env (never committed to git)
 const geocodingClient = mbxGeocoding({ accessToken: MAP_TOKEN });
